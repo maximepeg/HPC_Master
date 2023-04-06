@@ -1,0 +1,19 @@
+#datset
+dataset: 'squad'
+num_workers: 4
+
+#model param
+model_name: 'bert-base-uncased'
+lr: 3e-5
+batch_size: 16
+num_epochs: 2
+steps_per_epoch: 100
+
+#training param
+device: 2
+accelerator: 'gpu'
+precision: 16
+strategy: 'fsdp'
+
+
+

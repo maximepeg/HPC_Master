@@ -1,0 +1,50 @@
+aiohttp @ file:///croot/aiohttp_1670009560265/work
+aiosignal @ file:///tmp/build/80754af9/aiosignal_1637843061372/work
+async-timeout @ file:///opt/conda/conda-bld/async-timeout_1664876359750/work
+attrs @ file:///croot/attrs_1668696182826/work
+Bottleneck @ file:///opt/conda/conda-bld/bottleneck_1657175564434/work
+brotlipy==0.7.0
+certifi @ file:///croot/certifi_1671487769961/work/certifi
+cffi @ file:///croot/cffi_1670423208954/work
+charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+cryptography @ file:///croot/cryptography_1677533068310/work
+datasets @ file:///croot/datasets_1679486912094/work
+dill @ file:///croot/dill_1667919592856/work
+filelock @ file:///croot/filelock_1672387128942/work
+flit_core @ file:///croot/flit-core_1679397103445/work/source/flit_core
+frozenlist @ file:///croot/frozenlist_1670004507010/work
+fsspec @ file:///croot/fsspec_1679418786824/work
+future @ file:///croot/future_1677599870788/work
+huggingface-hub @ file:///croot/huggingface_hub_1667490244076/work
+idna @ file:///croot/idna_1666125576474/work
+lightning-utilities @ file:///croot/lightning-utilities_1677510309509/work
+mkl-fft==1.3.1
+mkl-random @ file:///home/builder/ci_310/mkl_random_1641843545607/work
+mkl-service==2.4.0
+multidict @ file:///croot/multidict_1665674239670/work
+multiprocess @ file:///croot/multiprocess_1668006441451/work
+numexpr @ file:///croot/numexpr_1668713893690/work
+numpy @ file:///croot/numpy_and_numpy_base_1672336185480/work
+packaging @ file:///croot/packaging_1678965309396/work
+pandas==1.5.3
+pyarrow==10.0.1
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pyOpenSSL @ file:///croot/pyopenssl_1677607685877/work
+PySocks @ file:///home/builder/ci_310/pysocks_1640793678128/work
+python-dateutil @ file:///tmp/build/80754af9/python-dateutil_1626374649649/work
+pytorch-lightning @ file:///croot/pytorch-lightning_1677759520759/work
+pytz @ file:///croot/pytz_1671697431263/work
+PyYAML @ file:///croot/pyyaml_1670514731622/work
+regex @ file:///tmp/abs_41f5bce5-0a2e-45aa-b231-1fd2fbd57753gfpe6sjm/croots/recipe/regex_1658257178822/work
+requests @ file:///croot/requests_1678709721434/work
+responses @ file:///tmp/build/80754af9/responses_1619800270522/work
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+tokenizers @ file:///opt/conda/conda-bld/tokenizers_1651822590771/work
+torch==1.12.1
+torchmetrics @ file:///croot/torchmetrics_1677572957414/work
+tqdm @ file:///croot/tqdm_1679561862951/work
+transformers @ file:///croot/transformers_1667919440064/work
+typing_extensions @ file:///croot/typing_extensions_1669924550328/work
+urllib3 @ file:///croot/urllib3_1680254681959/work
+xxhash @ file:///croot/python-xxhash_1667919521615/work
+yarl @ file:///opt/conda/conda-bld/yarl_1661437085904/work

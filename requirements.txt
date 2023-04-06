@@ -24,7 +24,7 @@ mkl-service==2.4.0
 multidict==6.0.2
 multiprocess==0.70.14
 numexpr==2.8.4
-numpy==1.23.5
+numpy
 packaging==23.0
 pandas==1.5.3
 pip==23.0.1

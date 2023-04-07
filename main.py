@@ -19,16 +19,11 @@ if __name__ == '__main__':
     accelerator = config.get('accelerator', 'cpu')
     strategy = config.get('strategy', 'ddp')
 
-
-
-
-
-
     data = SquadData(model_name, dataset_name, batch_size, num_workers)
     data.prepare_data()
     data.setup()
-
-    model = SquadModule(model_name, lr)
+    steps_per_epoch = len(data.train_data)
+    model = SquadModule(model_name,lr, steps_per_epoch, num_epochs)
 
     trainer = pl.Trainer(accelerator=accelerator,
                          gpus=devices,
@@ -39,4 +34,3 @@ if __name__ == '__main__':
     trainer.fit(model, data)
 
     trainer.test(model, data)
-

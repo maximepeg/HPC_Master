@@ -22,7 +22,6 @@ class SquadModel(pl.LightningModule):
     def forward(self, batch):
         outputs = self.model(input_ids=batch['input_ids'],
                              attention_mask=batch['attention_mask'])
-        print("outputs: ", outputs)
 
         logits = self.output(outputs[0])
         start_logits, end_logits = logits.split(1, dim=-1)

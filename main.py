@@ -17,8 +17,8 @@ if __name__ == '__main__':
 
     devices = config.get('devices', 1)
     precision = config.get('precision', 32)
-    accelerator = config.get('accelerator', 'ddp')
-    strategy = config.get('strategy', 'ddp_spawn')
+    accelerator = config.get('accelerator', 'cpu')
+    strategy = config.get('strategy', 'ddp')
 
 
 

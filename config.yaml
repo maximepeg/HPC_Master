@@ -6,8 +6,7 @@ num_workers: 4
 model_name: 'bert-base-uncased'
 lr: 3e-5
 batch_size: 16
-num_epochs: 2
-steps_per_epoch: 100
+num_epochs: 20
 
 #training param
 device: 2

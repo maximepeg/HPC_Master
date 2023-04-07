@@ -36,7 +36,7 @@ class SquadModule(pl.LightningModule):
     def __init__(self, model_name, lr, steps_per_epoch, max_epochs=1):
         super().__init__()
         self.hparams["learning_rate"] = lr
-        self.hparams["steps_per_epoch"] = steps_per_epoch
+        # self.hparams["steps_per_epoch"] = steps_per_epoch
         self.hparams["model_name"] = model_name
         self.hparams["max_epochs"] = max_epochs
         self.steps_per_epoch = steps_per_epoch
@@ -100,7 +100,6 @@ class SquadModule(pl.LightningModule):
         scheduler = {
             'scheduler': torch.optim.lr_scheduler.OneCycleLR(optimizer,
                                                              max_lr=self.hparams["learning_rate"],
-                                                             steps_per_epoch=self.steps_per_epoch,
                                                              epochs=self.hparams["max_epochs"]),
             'interval': 'step'  # called after each training step
         }

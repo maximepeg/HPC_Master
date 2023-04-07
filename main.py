@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     model_name = config.get('model_name', 'bert-base-uncased')
     batch_size = config.get('batch_size', 16)
-    lr = config.get('lr', 1e-5)
+    lr = float(config.get('lr', 1e-5))
     num_epochs = config.get('num_epochs', 3)
     steps_per_epoch = config.get('steps_per_epoch', 100)
 

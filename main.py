@@ -13,7 +13,6 @@ if __name__ == '__main__':
     batch_size = config.get('batch_size', 16)
     lr = float(config.get('lr', 1e-5))
     num_epochs = config.get('num_epochs', 3)
-    steps_per_epoch = config.get('steps_per_epoch', 100)
 
     devices = config.get('devices', 1)
     precision = config.get('precision', 32)
@@ -29,7 +28,7 @@ if __name__ == '__main__':
     data.prepare_data()
     data.setup()
 
-    model = SquadModule(model_name, lr, steps_per_epoch)
+    model = SquadModule(model_name, lr)
 
     trainer = pl.Trainer(accelerator=accelerator,
                          gpus=devices,

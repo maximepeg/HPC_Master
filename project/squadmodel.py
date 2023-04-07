@@ -28,18 +28,16 @@ class SquadModel(pl.LightningModule):
         start_logits = start_logits.squeeze(-1)
         end_logits = end_logits.squeeze(-1)
 
-
         return {'start_logits': start_logits, 'end_logits': end_logits}
 
 
 class SquadModule(pl.LightningModule):
-    def __init__(self, model_name, lr, steps_per_epoch, max_epochs=1):
+    def __init__(self, model_name, lr, max_epochs=1):
         super().__init__()
         self.hparams["learning_rate"] = lr
         # self.hparams["steps_per_epoch"] = steps_per_epoch
         self.hparams["model_name"] = model_name
         self.hparams["max_epochs"] = max_epochs
-        self.steps_per_epoch = steps_per_epoch
         self.save_hyperparameters()
         self.model = SquadModel(model_name)
 

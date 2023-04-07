@@ -2,10 +2,12 @@ import pytorch_lightning as pl
 from yaml import full_load
 from project.data import SquadData
 from project.squadmodel import SquadModule
+from pytorch_lightning.loggers import WandbLogger
 
 if __name__ == '__main__':
     config = full_load(open('config.yaml'))
 
+    logger = WandbLogger()
     dataset_name = config.get('dataset_name', 'squad')
     num_workers = config.get('num_workers', 4)
 
@@ -18,7 +20,9 @@ if __name__ == '__main__':
     precision = config.get('precision', 32)
     accelerator = config.get('accelerator', 'cpu')
     strategy = config.get('strategy', 'ddp')
+    enable_checkpoint = config.get('checkpoint', False)
 
+    logger.experiment.config.update(config)
     data = SquadData(model_name, dataset_name, batch_size, num_workers)
     data.prepare_data()
     data.setup()
@@ -26,10 +30,12 @@ if __name__ == '__main__':
     model = SquadModule(model_name,lr, steps_per_epoch, num_epochs)
 
     trainer = pl.Trainer(accelerator=accelerator,
-                         gpus=devices,
+                         devices=devices,
                          precision=precision,
                          strategy=strategy,
-                         max_epochs=num_epochs)
+                         max_epochs=num_epochs,
+                         logger=logger,
+                         enable_checkpointing=enable_checkpoint)
 
     trainer.fit(model, data)
 

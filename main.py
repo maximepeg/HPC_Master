@@ -3,8 +3,10 @@ from yaml import full_load
 from project.data import SquadData
 from project.squadmodel import SquadModule
 from pytorch_lightning.loggers import WandbLogger
-
+import os
 if __name__ == '__main__':
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
     config = full_load(open('config.yaml'))
 
     logger = WandbLogger()

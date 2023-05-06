@@ -79,12 +79,12 @@ class SquadModule(pl.LightningModule):
     def training_step(self, batch, batch_nf):
 
         total_loss = self.common_step(batch)
-        self.log('train_loss', total_loss)
+        self.log('train_loss', total_loss, sync_dist=True)
         return total_loss
 
     def validation_step(self, batch, batch_nf):
         total_loss = self.common_step(batch)
-        self.log('val_loss', total_loss)
+        self.log('val_loss', total_loss, sync_dist=True)
         return total_loss
 
     def predict_step(self, batch, batch_idx: int, dataloader_idx: int = 0):

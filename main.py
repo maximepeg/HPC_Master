@@ -3,6 +3,7 @@ from yaml import full_load
 from project.data import SquadData
 from project.squadmodel import SquadModule
 from pytorch_lightning.loggers import WandbLogger
+from pytorch_lightning.callbacks import LearningRateMonitor
 import os
 if __name__ == '__main__':
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -30,14 +31,15 @@ if __name__ == '__main__':
     data.setup()
     steps_per_epoch = len(data.train_data)
     model = SquadModule(model_name,lr, steps_per_epoch, num_epochs)
-
+    callbacks = [LearningRateMonitor(logging_interval='step')]
     trainer = pl.Trainer(accelerator=accelerator,
                          devices=devices,
                          precision=precision,
                          strategy=strategy,
                          max_epochs=num_epochs,
                          logger=logger,
-                         enable_checkpointing=enable_checkpoint)
+                         enable_checkpointing=enable_checkpoint,
+                         callbacks=callbacks)
 
     trainer.fit(model, data)
 

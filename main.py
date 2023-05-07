@@ -25,7 +25,6 @@ if __name__ == '__main__':
     strategy = config.get('strategy', 'ddp')
     enable_checkpoint = config.get('checkpoint', False)
 
-    logger.experiment.config.update(config)
     data = SquadData(model_name, dataset_name, batch_size, num_workers)
     data.prepare_data()
     data.setup()
@@ -40,6 +39,9 @@ if __name__ == '__main__':
                          logger=logger,
                          enable_checkpointing=enable_checkpoint,
                          callbacks=callbacks)
+
+    if trainer.global_rank == 0:
+        logger.experiment.config.update(config)
 
     trainer.fit(model, data)
 

@@ -5,12 +5,13 @@ num_workers: 4
 #model param
 model_name: 'bert-base-uncased'
 lr: 3e-5
-batch_size: 16
+batch_size: 40
 num_epochs: 5
 
 #training param
-device: 2
-accelerator: 'cpu'
+device: 1
+num_nodes: 2
+accelerator: 'gpu'
 precision: 16
 strategy: 'ddp'
 checkpoint: False

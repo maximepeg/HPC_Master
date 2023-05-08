@@ -24,6 +24,7 @@ if __name__ == '__main__':
     accelerator = config.get('accelerator', 'cpu')
     strategy = config.get('strategy', 'ddp')
     enable_checkpoint = config.get('checkpoint', False)
+    num_nodes = config.get('num_nodes', 1)
 
     data = SquadData(model_name, dataset_name, batch_size, num_workers)
     data.prepare_data()
@@ -38,7 +39,8 @@ if __name__ == '__main__':
                          max_epochs=num_epochs,
                          logger=logger,
                          enable_checkpointing=enable_checkpoint,
-                         callbacks=callbacks)
+                         callbacks=callbacks,
+			 num_nodes=num_nodes)
 
     if trainer.global_rank == 0:
         logger.experiment.config.update(config)

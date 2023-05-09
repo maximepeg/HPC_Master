@@ -9,8 +9,8 @@ batch_size: 40
 num_epochs: 5
 
 #training param
-device: 1
-num_nodes: 2
+devices: 2
+num_nodes: 1
 accelerator: 'gpu'
 precision: 16
 strategy: 'ddp'

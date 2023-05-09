@@ -71,6 +71,11 @@ class SquadModule(pl.LightningModule):
         output = self.model(batch)
         start_logits = output['start_logits']
         end_logits = output['end_logits']
+        #compute precision
+        precision = torch.nn.functional.softmax(start_logits, dim=1)
+        precision = torch.argmax(precision, dim=1)
+        precision = torch.sum(precision == start_positions) / len(start_positions)
+        self.log('precision', precision, sync_dist=True)
 
         total_loss = self.compute_loss(start_positions, end_positions, start_logits, end_logits)
 

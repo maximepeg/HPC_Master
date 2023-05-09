@@ -2,8 +2,8 @@ import pytorch_lightning as pl
 from datasets import load_dataset
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
-
-
+import torch
+torch.cuda_is_available()
 class SquadData(pl.LightningDataModule):
     def __init__(self, model_name, dataset_name, batch_size=16, num_workers=4):
         super().__init__()

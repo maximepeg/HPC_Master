@@ -1,11 +1,14 @@
 import pytorch_lightning as pl
+import torch
 from yaml import full_load
 from project.data import SquadData
 from project.squadmodel import SquadModule
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import LearningRateMonitor
 import os
+
 if __name__ == '__main__':
+    torch.device("cuda" if torch.cuda_is_available() else "cpu")
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
     config = full_load(open('config.yaml'))

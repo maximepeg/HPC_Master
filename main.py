@@ -8,7 +8,7 @@ from pytorch_lightning.callbacks import LearningRateMonitor
 import os
 
 if __name__ == '__main__':
-    torch.device("cuda" if torch.cuda_is_available() else "cpu")
+    torch.device("cuda" if torch.cuda.is_available() else "cpu")
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
     config = full_load(open('config.yaml'))

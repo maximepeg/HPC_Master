@@ -33,7 +33,7 @@ if __name__ == '__main__':
     data.prepare_data()
     data.setup()
     steps_per_epoch = len(data.train_data)
-    model = SquadModule(model_name,lr, steps_per_epoch, num_epochs)
+    model = SquadModule(model_name, lr, steps_per_epoch, num_epochs)
     callbacks = [LearningRateMonitor(logging_interval='step')]
     trainer = pl.Trainer(accelerator=accelerator,
                          devices=devices,
@@ -43,11 +43,11 @@ if __name__ == '__main__':
                          logger=logger,
                          enable_checkpointing=enable_checkpoint,
                          callbacks=callbacks,
-			 num_nodes=num_nodes)
+                         num_nodes=num_nodes)
 
     if trainer.global_rank == 0:
         logger.experiment.config.update(config)
 
     trainer.fit(model, data)
 
-    trainer.test(model, data)
+    trainer.validate(model, data)

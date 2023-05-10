@@ -28,7 +28,6 @@ class SquadModel(pl.LightningModule):
         start_logits = start_logits.squeeze(-1)
         end_logits = end_logits.squeeze(-1)
 
-
         return {'start_logits': start_logits, 'end_logits': end_logits}
 
 
@@ -64,18 +63,18 @@ class SquadModule(pl.LightningModule):
 
         return total_loss
 
-    def common_step(self, batch, ):
+    def common_step(self, batch, phase):
         start_positions = batch['start_positions']
         end_positions = batch['end_positions']
 
         output = self.model(batch)
         start_logits = output['start_logits']
         end_logits = output['end_logits']
-        #compute precision
+        # compute precision
         precision = torch.nn.functional.softmax(start_logits, dim=1)
         precision = torch.argmax(precision, dim=1)
         precision = torch.sum(precision == start_positions) / len(start_positions)
-        self.log('precision', precision, sync_dist=True)
+        self.log(f'{phase}_precision', precision, sync_dist=True)
 
         total_loss = self.compute_loss(start_positions, end_positions, start_logits, end_logits)
 
@@ -83,12 +82,12 @@ class SquadModule(pl.LightningModule):
 
     def training_step(self, batch, batch_nf):
 
-        total_loss = self.common_step(batch)
+        total_loss = self.common_step(batch, "training")
         self.log('train_loss', total_loss, sync_dist=True)
         return total_loss
 
     def validation_step(self, batch, batch_nf):
-        total_loss = self.common_step(batch)
+        total_loss = self.common_step(batch, "validation")
         self.log('val_loss', total_loss, sync_dist=True)
         return total_loss
 

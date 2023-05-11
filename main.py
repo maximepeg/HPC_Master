@@ -34,7 +34,7 @@ if __name__ == '__main__':
     data.setup()
     steps_per_epoch = len(data.train_data)
     model = SquadModule(model_name, lr, steps_per_epoch, num_epochs)
-    callbacks = [LearningRateMonitor(logging_interval='step'), BatchSizeFinder(mode="binsearch", init_val=16, max_trials=10)]
+    callbacks = [LearningRateMonitor(logging_interval='step')]
 
     trainer = pl.Trainer(accelerator=accelerator,
                          devices=devices,

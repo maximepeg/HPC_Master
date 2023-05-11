@@ -80,7 +80,7 @@ class SquadModule(pl.LightningModule):
 
         return total_loss
 
-    def training_step(self, batch, batch_nf):
+    def training_step(self, batch):
 
         total_loss = self.common_step(batch, "training")
         self.log('train_loss', total_loss, sync_dist=True)

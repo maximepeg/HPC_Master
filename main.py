@@ -1,11 +1,10 @@
-
 import pytorch_lightning as pl
 import torch
 from yaml import full_load
 from project.data import SquadData
 from project.squadmodel import SquadModule
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks import LearningRateMonitor
+from pytorch_lightning.callbacks import LearningRateMonitor, BatchSizeFinder
 import os
 
 if __name__ == '__main__':
@@ -35,7 +34,7 @@ if __name__ == '__main__':
     data.setup()
     steps_per_epoch = len(data.train_data)
     model = SquadModule(model_name, lr, steps_per_epoch, num_epochs)
-    callbacks = [LearningRateMonitor(logging_interval='step')]
+    callbacks = [LearningRateMonitor(logging_interval='step'), BatchSizeFinder(mode="binsearch", init_val=16, max_trials=10)]
 
     trainer = pl.Trainer(accelerator=accelerator,
                          devices=devices,
@@ -46,11 +45,6 @@ if __name__ == '__main__':
                          enable_checkpointing=enable_checkpoint,
                          callbacks=callbacks,
                          num_nodes=num_nodes)
-    tuner = pl.tuner.tuning.Tuner(trainer, mode="binsearch")
-    optimal_batch_size = tuner.scale_batch_size(model, data)
-
-    print("Optimal batch size:", optimal_batch_size)
-    model.hparams.batch_size = optimal_batch_size
 
     if trainer.global_rank == 0:
         logger.experiment.config.update(config)

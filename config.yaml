@@ -13,7 +13,7 @@ devices: 1
 num_nodes: 1
 accelerator: 'gpu'
 precision: 16
-strategy: 'ddp'
+strategy: 'ddp_find_unused_parameters_true'
 checkpoint: False
 
 

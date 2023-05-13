@@ -4,7 +4,7 @@ from yaml import full_load
 from project.data import SquadData
 from project.squadmodel import SquadModule
 from pytorch_lightning.loggers import WandbLogger
-from pytorch_lightning.callbacks import LearningRateMonitor, BatchSizeFinder
+from pytorch_lightning.callbacks import LearningRateMonitor
 import os
 
 if __name__ == '__main__':
@@ -34,8 +34,6 @@ if __name__ == '__main__':
     data.setup()
     steps_per_epoch = len(data.train_data)
     model = SquadModule(model_name, lr, steps_per_epoch, num_epochs)
-    print("require grad : ", [p for p in model.parameters() if p.requires_grad])
-    print("don't require grad : ", [p for p in model.parameters() if not p.requires_grad])
     callbacks = [LearningRateMonitor(logging_interval='step')]
 
     trainer = pl.Trainer(accelerator=accelerator,

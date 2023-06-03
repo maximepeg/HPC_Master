@@ -108,4 +108,3 @@ grid_config = {
 
 configs = generate_configs(grid_config)
 print(generate_main(configs[0]))
-"""

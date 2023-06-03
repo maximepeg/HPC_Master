@@ -3,17 +3,17 @@ dataset: 'squad'
 num_workers: 4
 
 #model param
-model_name: 'bert-base-uncased'
+model_name: 'distilbert-base-cased-distilled-squad'
 lr: 3e-5
-batch_size: 40
+batch_size: 232
 num_epochs: 5
 
 #training param
-devices: 1
+devices: 2
 num_nodes: 1
 accelerator: 'gpu'
 precision: 16
-strategy: 'ddp_find_unused_parameters_true'
+strategy: 'ddp'
 checkpoint: False
 
 

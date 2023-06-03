@@ -28,14 +28,13 @@ if __name__ == '__main__':
     strategy = config.get('strategy', 'ddp')
     enable_checkpoint = config.get('checkpoint', False)
     num_nodes = config.get('num_nodes', 1)
-
+    model_nickname = model_name.split("-")[0]
     data = SquadData(model_name, dataset_name, batch_size, num_workers)
     data.prepare_data()
     data.setup()
     steps_per_epoch = len(data.train_data)
     model = SquadModule(model_name, lr, steps_per_epoch, num_epochs)
     callbacks = [LearningRateMonitor(logging_interval='step')]
-
     trainer = pl.Trainer(accelerator=accelerator,
                          devices=devices,
                          precision=precision,
@@ -46,8 +45,11 @@ if __name__ == '__main__':
                          callbacks=callbacks,
                          num_nodes=num_nodes)
 
+
     if trainer.global_rank == 0:
         logger.experiment.config.update(config)
+        logger.experiment.name = logger.experiment.name + f"-{devices}_GPU-{num_nodes}_NODE-{model_nickname}"
+
 
     trainer.fit(model, data)
-    trainer.validate(model, data)
+    # trainer.validate(model, data)

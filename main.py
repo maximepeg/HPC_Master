@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     if trainer.global_rank == 0:
         logger.experiment.config.update(config)
-        logger.experiment.name = logger.experiment.name + f"-{devices}_GPU-{num_nodes}_NODE-{model_nickname}"
+        logger.experiment.name = logger.experiment.name + f"-{devices}_GPU-{num_nodes}_NODE-{model_nickname}_{strategy}"
 
 
     trainer.fit(model, data)

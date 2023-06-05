@@ -74,21 +74,21 @@ def generate_configs(grid_config):
 
 def generate_sbatch(filename, config):
     sbatch_content = f"""#!/bin/bash
-    
-    #SBATCH -N {config['nodes']}             # This needs to match Trainer(num_nodes=...)
-    #SBATCH --gres=gpu:a100:2
-    #SBATCH --ntasks-per-node=2   # This needs to match Trainer(devices=...)
-    #SBATCH --mem=8G
-    #SBATCH -c 32
-    #SBATCH --time=0-02:00:00
-    
-    export NCCL_DEBUG=INFO
-    export PYTHONFAULTHANDLER=1
-    
-    #module load cuda
-    
-    conda activate myenv
-    srun  python {filename}"""
+
+#SBATCH -N {config['nodes']}             # This needs to match Trainer(num_nodes=...)
+#SBATCH --gres=gpu:a100:2
+#SBATCH --ntasks-per-node=2   # This needs to match Trainer(devices=...)
+#SBATCH --mem=8G
+#SBATCH -c 32
+#SBATCH --time=0-02:00:00
+
+export NCCL_DEBUG=INFO
+export PYTHONFAULTHANDLER=1
+
+#module load cuda
+
+conda activate myenv
+srun  python {filename}"""
     return sbatch_content
 
 

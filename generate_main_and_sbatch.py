@@ -91,6 +91,7 @@ def generate_sbatch(filename, config):
     
     conda activate myenv
     srun  python {filename}"""
+    return sbatch_content
 
 
 
@@ -107,4 +108,13 @@ grid_config = {
 }
 
 configs = generate_configs(grid_config)
-print(generate_main(configs[0]))
+for i,config in enumerate(configs):
+    # print(config)
+    main_file_content = generate_main(config)
+    with open(f"main{i}.py", "w") as f:
+        f.write(main_file_content)
+    sbatch_content = generate_sbatch(f"main{i}.py", config)
+    with open(f"sbatch{i}.sh", "w") as f:
+        f.write(sbatch_content)
+
+#%%

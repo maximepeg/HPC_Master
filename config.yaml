@@ -15,5 +15,3 @@ accelerator: 'gpu'
 precision: 16
 strategy: 'ddp'
 checkpoint: False
-
-

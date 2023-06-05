@@ -74,8 +74,6 @@ def generate_configs(grid_config):
 
 def generate_sbatch(filename, config):
     sbatch_content = f"""#!/bin/bash
-    #SBATCH --job-name={config['model_name']}-{config['strategy']}-{config['nodes']}
-    #SBATCH --output={config['model_name']}-{config['strategy']}-{config['nodes']}.out
     
     #SBATCH -N {config['nodes']}             # This needs to match Trainer(num_nodes=...)
     #SBATCH --gres=gpu:a100:2

@@ -103,7 +103,7 @@ srun  python {filename}"""
 grid_config = {
     "model_name": ["bert-base-uncased", "distilbert-base-uncased"],
     "nodes": [1, 2, 3, 4, 5],
-    "strategy": ["ddp", "ddp2", "ddp_spawn", "ddp_sharded", "dp", "fsdp", "horovod"],
+    "strategy": ["ddp_find_unused_parameters", "dp", "fsdp", "horovod"],
 
 }
 

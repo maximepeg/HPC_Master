@@ -24,6 +24,8 @@ if __name__ == '__main__':
     
     config = full_load(open('config.yaml'))
     config.update({config})
+    if config['model_name'] == 'bert-base-uncased':
+        config['batch_size'] = 100
     logger = WandbLogger()
     dataset_name = config.get('dataset_name', 'squad')
     num_workers = config.get('num_workers', 4)

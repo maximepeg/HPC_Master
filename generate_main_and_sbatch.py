@@ -1,10 +1,5 @@
-# generate main.py and sbatch.sh
-
-import os
-import sys
-import argparse
-import yaml
 from itertools import product
+
 
 def generate_main(config):
     main_file_content = f"""
@@ -20,6 +15,8 @@ import os
 if __name__ == '__main__':
     
     torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    torch.set_float32_matmul_precision('medium' )
+
     os.environ["TOKENIZERS_PARALLELISM"] = "false"
     
     config = full_load(open('config.yaml'))
@@ -47,6 +44,9 @@ if __name__ == '__main__':
     data.setup()
     steps_per_epoch = len(data.train_data)
     model = SquadModule(model_name, lr, steps_per_epoch, num_epochs)
+    for param in model.parameters():
+        param.requires_grad = True
+
     callbacks = [LearningRateMonitor(logging_interval='step')]
     trainer = pl.Trainer(accelerator=accelerator,
                          devices=devices,
@@ -69,10 +69,12 @@ if __name__ == '__main__':
         """
     return main_file_content
 
+
 def generate_configs(grid_config):
     keys, values = zip(*grid_config.items())
     configs = [dict(zip(keys, v)) for v in product(*values)]
     return configs
+
 
 def generate_sbatch(filename, config):
     sbatch_content = f"""#!/bin/bash
@@ -94,21 +96,14 @@ srun  python {filename}"""
     return sbatch_content
 
 
-
-
-
-
-
-
 grid_config = {
     "model_name": ["bert-base-uncased", "distilbert-base-uncased"],
     "num_nodes": [1, 2, 3, 4, 5],
-    "strategy": ["ddp_find_unused_parameters_true", "hivemind", "fsdp", "ddp_spawn", "deepspeed"],
-
+    "strategy": ["ddp", "deepspeed"],
 }
 
 configs = generate_configs(grid_config)
-for i,config in enumerate(configs):
+for i, config in enumerate(configs):
     # print(config)
     main_file_content = generate_main(config)
     with open(f"main{i}.py", "w") as f:
@@ -116,5 +111,3 @@ for i,config in enumerate(configs):
     sbatch_content = generate_sbatch(f"main{i}.py", config)
     with open(f"sbatch{i}.sh", "w") as f:
         f.write(sbatch_content)
-
-#%%

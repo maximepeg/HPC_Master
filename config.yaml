@@ -9,9 +9,9 @@ batch_size: 232
 num_epochs: 5
 
 #training param
-devices: 2
+devices: 1
 num_nodes: 1
 accelerator: 'gpu'
 precision: 16
-strategy: 'ddp'
+strategy: 'deepspeed'
 checkpoint: False

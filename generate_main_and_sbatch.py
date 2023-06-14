@@ -61,7 +61,7 @@ if __name__ == '__main__':
     
     if trainer.global_rank == 0:
         logger.experiment.config.update(config)
-        logger.experiment.name = logger.experiment.name + f"-devices_GPU-num_nodes_NODE-model_nickname_strategy"
+        logger.experiment.name = logger.experiment.name + f"-{{devices}}_GPU-{{num_nodes}}_NODE-{{model_nickname}}_{{strategy}}"
     
     
     trainer.fit(model, data)
@@ -77,7 +77,7 @@ def generate_configs(grid_config):
 def generate_sbatch(filename, config):
     sbatch_content = f"""#!/bin/bash
 
-#SBATCH -N {config['nodes']}             # This needs to match Trainer(num_nodes=...)
+#SBATCH -N {config['num_nodes']}             # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:a100:2
 #SBATCH --ntasks-per-node=2   # This needs to match Trainer(devices=...)
 #SBATCH --mem=8G
@@ -102,8 +102,8 @@ srun  python {filename}"""
 
 grid_config = {
     "model_name": ["bert-base-uncased", "distilbert-base-uncased"],
-    "nodes": [1, 2, 3, 4, 5],
-    "strategy": ["ddp_find_unused_parameters", "dp", "fsdp", "horovod"],
+    "num_nodes": [1, 2, 3, 4, 5],
+    "strategy": ["ddp_find_unused_parameters_true", "hivemind", "fsdp", "ddp_spawn", "deepspeed"],
 
 }
 
